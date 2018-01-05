@@ -8,7 +8,7 @@
 
 import Foundation
 struct Movie {
-    let identifier:Int64
+    let identifier:Int
     let title:String
     let overview:String
     let releaseDate:Date
@@ -18,7 +18,7 @@ struct Movie {
     
     let genreIds:[Int]
     
-    init(identifier:Int64, title: String, overview: String, date: Date, originalTitle: String?, posterUrl: String?, backdropUrl:String?, genreIds:[Int]) {
+    init(identifier:Int, title: String, overview: String, date: Date, originalTitle: String?, posterUrl: String?, backdropUrl:String?, genreIds:[Int]) {
         self.identifier = identifier
         self.title = title
         self.overview = overview
@@ -33,7 +33,7 @@ struct Movie {
         let dateFormater = DateFormatter()
         dateFormater.dateFormat = Constants.API.dateFormat
         
-        guard let identifier = jsonObject[Constants.ResponseParams.id] as? Int64,
+        guard let identifier = jsonObject[Constants.ResponseParams.id] as? Int,
             let title = jsonObject[Constants.ResponseParams.title] as? String,
             let overview = jsonObject[Constants.ResponseParams.overview] as? String,
             let dateString = jsonObject[Constants.ResponseParams.releaseDate] as? String,

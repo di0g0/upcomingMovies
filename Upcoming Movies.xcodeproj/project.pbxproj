@@ -42,6 +42,8 @@
 		DD6777A51FF856D900E5BB51 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6777A41FF856D900E5BB51 /* MovieDetailViewController.swift */; };
 		DD6777A61FF856D900E5BB51 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6777A41FF856D900E5BB51 /* MovieDetailViewController.swift */; };
 		DD6777A71FF856D900E5BB51 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6777A41FF856D900E5BB51 /* MovieDetailViewController.swift */; };
+		DD755A1F1FFFC4AD00DBB83F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2E95D31FFC6DB600632BD4 /* Constants.swift */; };
+		DD755A201FFFC4AD00DBB83F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2E95D31FFC6DB600632BD4 /* Constants.swift */; };
 		DD8BE2D71FFB0889008A7176 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8BE2D61FFB0889008A7176 /* Genre.swift */; };
 		DD8BE2D81FFB0889008A7176 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8BE2D61FFB0889008A7176 /* Genre.swift */; };
 		DD8BE2D91FFB0889008A7176 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8BE2D61FFB0889008A7176 /* Genre.swift */; };
@@ -627,6 +629,7 @@
 				DD2E96081FFEA52300632BD4 /* MovieListViewModel.swift in Sources */,
 				DD6777A21FF73AE600E5BB51 /* APIClient.swift in Sources */,
 				DD2E95EE1FFD4B3C00632BD4 /* ImageManager.swift in Sources */,
+				DD755A1F1FFFC4AD00DBB83F /* Constants.swift in Sources */,
 				DD2E96041FFE95E500632BD4 /* MovieListViewControllerTableViewExtensions.swift in Sources */,
 				DD2E95F21FFDB57400632BD4 /* Movie.swift in Sources */,
 				DD2E95F61FFDB58100632BD4 /* GenreManager.swift in Sources */,
@@ -649,6 +652,7 @@
 				DD2E96091FFEA52300632BD4 /* MovieListViewModel.swift in Sources */,
 				DD6777A31FF73AE600E5BB51 /* APIClient.swift in Sources */,
 				DD2E95EF1FFD4B3C00632BD4 /* ImageManager.swift in Sources */,
+				DD755A201FFFC4AD00DBB83F /* Constants.swift in Sources */,
 				DD2E96051FFE95E500632BD4 /* MovieListViewControllerTableViewExtensions.swift in Sources */,
 				DD2E95F31FFDB57400632BD4 /* Movie.swift in Sources */,
 				DD2E95F71FFDB58100632BD4 /* GenreManager.swift in Sources */,
