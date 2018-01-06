@@ -8,7 +8,7 @@
 
 import Foundation
 struct MovieViewModel {
-    let movie: Movie
+    private let movie: Movie
     
     var title:String {
         return movie.title.capitalized
