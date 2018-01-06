@@ -29,7 +29,7 @@ struct Movie {
         self.genreIds = genreIds
     }
     
-    static func fromJson(jsonObject: [String:Any]) -> Movie? {
+    static func fromJson(jsonObject: JSONObject) -> Movie? {
         let dateFormater = DateFormatter()
         dateFormater.dateFormat = Constants.API.dateFormat
         

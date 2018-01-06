@@ -39,7 +39,7 @@ class UpcomingMoviesViewController: MovieListBaseViewController {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if (indexPath.row == self.movieListViewModel.movies.count - 1 && self.movieListViewModel.canLoadMore) {
+        if (indexPath.row == self.movieListViewModel.movies.count - 1) {
             self.loadMoreMovies()
         }
     }

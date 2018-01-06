@@ -23,8 +23,8 @@ class APIClient {
         let url = Constants.API.apiBaseURL + Constants.API.configPath
         
         Alamofire.request(url, method: .get, parameters: defaultParams).responseJSON { (response) in
-            guard let responseJSON = response.result.value as? [String: Any],
-                let imagesConfig = responseJSON[Constants.ResponseParams.images] as? [String : Any],
+            guard let responseJSON = response.result.value as? JSONObject,
+                let imagesConfig = responseJSON[Constants.ResponseParams.images] as? JSONObject,
                 let imageBaseUrl = imagesConfig[Constants.ResponseParams.imageBaseUrl] as? String
                 else {
                     completion(nil,false)
@@ -39,8 +39,8 @@ class APIClient {
         let params = defaultParams
         
         Alamofire.request(url, method: .get, parameters: params).responseJSON { (response) in
-            guard let responseJSON = response.result.value as? [String: Any],
-                let jsonList = responseJSON[Constants.ResponseParams.genres] as? [[String : Any]] else {
+            guard let responseJSON = response.result.value as? JSONObject,
+                let jsonList = responseJSON[Constants.ResponseParams.genres] as? [JSONObject] else {
                     completion(nil,false)
                     return
             }
@@ -55,7 +55,7 @@ class APIClient {
         params[Constants.RequestParams.page] = page
         
         Alamofire.request(url, method: .get, parameters: params).responseJSON { (response) in
-            guard let responseJSON = response.result.value as? [String: Any],
+            guard let responseJSON = response.result.value as? JSONObject,
                 let jsonArray = responseJSON[Constants.ResponseParams.results] as? [JSONObject],
                 let totalPages = responseJSON[Constants.ResponseParams.totalPages] as? Int
                 else {
@@ -73,7 +73,7 @@ class APIClient {
         params[Constants.RequestParams.page] = page
         
         Alamofire.request(url, method: .get, parameters: params).responseJSON { (response) in
-            guard let responseJSON = response.result.value as? [String: Any],
+            guard let responseJSON = response.result.value as? JSONObject,
                 let jsonArray = responseJSON[Constants.ResponseParams.results] as? [JSONObject],
                 let totalPages = responseJSON[Constants.ResponseParams.totalPages] as? Int
                 else {

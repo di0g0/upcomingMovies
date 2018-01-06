@@ -7,7 +7,7 @@
 //
 
 class MovieListViewModel {
-    var currentPage = 0
+    private var currentPage = 0
     var canLoadMore = true
     
     var onMoviesUpdated: (()->())?
@@ -18,7 +18,7 @@ class MovieListViewModel {
         }
     }
     
-    func parseMoviesFrom(jsonResponse: [[String:Any]]) -> [MovieViewModel] {
+    func parseMoviesFrom(jsonResponse: [JSONObject]) -> [MovieViewModel] {
         var vms = [MovieViewModel]()
         for obj in jsonResponse {
             guard let movie = Movie.fromJson(jsonObject: obj) else {

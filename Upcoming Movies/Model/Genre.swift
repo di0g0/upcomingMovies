@@ -15,7 +15,7 @@ struct Genre {
         self.name = name
     }
     
-    static func fromJson(jsonObject: [String: Any]) -> Genre? {
+    static func fromJson(jsonObject: JSONObject) -> Genre? {
         guard let id = jsonObject[Constants.ResponseParams.id] as? Int,
             let name = jsonObject[Constants.ResponseParams.name] as? String else {
                 return nil
