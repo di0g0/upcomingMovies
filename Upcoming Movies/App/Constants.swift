@@ -10,6 +10,7 @@ struct Constants {
     struct API {
         internal static let apiBaseURL = "https://api.themoviedb.org/3"        
         internal static let upcomingPath = "/movie/upcoming"
+        internal static let movieDetailPath = "/movie/"
         internal static let genresPath = "/genre/movie/list"
         internal static let configPath = "/configuration"
         internal static let searchPath = "/search/movie"
@@ -20,7 +21,11 @@ struct Constants {
         internal static let apiKey = "api_key"
         internal static let page = "page"
         internal static let language = "language"
+        internal static let region = "region"
         internal static let query = "query"
+        internal static let movieId = "movie_id"
+        internal static let append = "append_to_response"
+        internal static let videosAndImages = "videos,images"
     }
     
     struct ResponseParams {

@@ -16,11 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     fileprivate func setupAppearance() {
         UIApplication.shared.statusBarStyle = .lightContent
-        UINavigationBar.appearance().isTranslucent = true
+        UINavigationBar.appearance().isTranslucent = true        
         UINavigationBar.appearance().tintColor = .orange
         UINavigationBar.appearance().barTintColor = .darkBackground
-        UINavigationBar.appearance().titleTextAttributes =
-            [NSAttributedStringKey.foregroundColor: UIColor.orange]
         UINavigationBar.appearance().titleTextAttributes =
             [NSAttributedStringKey.foregroundColor: UIColor.orange]
         UINavigationBar.appearance().largeTitleTextAttributes =

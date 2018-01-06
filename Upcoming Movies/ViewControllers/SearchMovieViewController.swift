@@ -14,7 +14,7 @@ class SearchMovieViewController: MovieListBaseViewController {
     
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = NSLocalizedString("Search movies", comment: "")
+        searchBar.placeholder = LocationManager.searchMoviesPlaceholder        
         searchBar.searchBarStyle = .minimal
         return searchBar
     }()

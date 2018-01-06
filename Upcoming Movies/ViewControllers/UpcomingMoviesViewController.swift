@@ -21,7 +21,7 @@ class UpcomingMoviesViewController: MovieListBaseViewController {
     func setupNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .always
-        self.title = NSLocalizedString("Upcoming Movies", comment: "")
+        self.title = LocationManager.upcomingMoviesTitle
     }
         
     override func viewDidLoad() {

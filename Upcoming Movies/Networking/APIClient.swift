@@ -13,7 +13,11 @@ typealias JSONObject = [String : Any]
 
 class APIClient {
     private static let apiKey = "1f54bd990f1cdfb230adb312546d765d"
-    private static let defaultParams:JSONObject = [Constants.RequestParams.apiKey : apiKey, Constants.RequestParams.language:Locale.preferredLanguages[0]]
+    private static let defaultParams:JSONObject = [
+        Constants.RequestParams.apiKey : apiKey,
+        Constants.RequestParams.language:LocationManager.lang,
+        Constants.RequestParams.region:LocationManager.region,
+        ]
     
     class func getConfig(completion:@escaping ((String?, Bool) -> Void)) {
         let url = Constants.API.apiBaseURL + Constants.API.configPath
