@@ -10,6 +10,7 @@ struct Constants {
     struct API {
         internal static let apiBaseURL = "https://api.themoviedb.org/3"        
         internal static let upcomingPath = "/movie/upcoming"
+        internal static let nowPlayingPath = "/movie/now_playing"
         internal static let movieDetailPath = "/movie/"
         internal static let genresPath = "/genre/movie/list"
         internal static let configPath = "/configuration"

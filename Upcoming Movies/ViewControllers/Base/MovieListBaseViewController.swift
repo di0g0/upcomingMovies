@@ -20,7 +20,8 @@ class MovieListBaseViewController : UIViewController, MovieListBaseViewControlle
     
     @IBOutlet weak var loadingMoreView: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
-    let movieListViewModel = MovieListViewModel()
+    
+    var movieListViewModel:MovieListViewModel = MovieListViewModel(listType: .Upcoming)
     
     private func setupTableView() {
         self.tableView.delegate = self

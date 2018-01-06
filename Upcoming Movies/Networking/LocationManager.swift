@@ -13,4 +13,6 @@ struct LocationManager {
     
     static let searchMoviesPlaceholder = NSLocalizedString("Search movies", comment: "")
     static let upcomingMoviesTitle = NSLocalizedString("Upcoming Movies", comment: "")
+    static let nowPlayingMoviesTitle = NSLocalizedString("Now In Theaters", comment: "")
+    static let moviesTitle = NSLocalizedString("Movies Title", comment: "")
 }

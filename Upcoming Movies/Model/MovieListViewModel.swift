@@ -6,11 +6,55 @@
 //  Copyright © 2018  Diogo Costa. All rights reserved.
 //
 
+enum MovieListType {
+    case Search
+    case Upcoming
+    case NowPlaying
+    
+    init(tabBarIndex:Int) {
+        switch tabBarIndex {
+        case 0:
+            self = .Upcoming
+        case 1:
+            self = .NowPlaying                
+        default:
+            self = .Upcoming
+        }
+    }
+    
+    func getURLPath() -> String {
+        switch self {
+        case .Upcoming:
+            return Constants.API.upcomingPath
+        case .NowPlaying:
+            return Constants.API.nowPlayingPath
+        case .Search:
+            return Constants.API.searchPath
+        }
+    }
+    
+    func getViewTitle() -> String {
+        switch self {
+        case .Upcoming:
+            return LocationManager.upcomingMoviesTitle
+        case .NowPlaying:
+            return LocationManager.nowPlayingMoviesTitle
+        case .Search:
+            return LocationManager.searchMoviesPlaceholder
+        }
+    }
+}
+
 class MovieListViewModel {
     private var currentPage = 0
     var canLoadMore = true
     
     var onMoviesUpdated: (()->())?
+    let listType:MovieListType
+    
+    init(listType: MovieListType) {
+        self.listType = listType
+    }
     
     internal var movies:[MovieViewModel] = [MovieViewModel]() {
         didSet{
@@ -31,7 +75,7 @@ class MovieListViewModel {
     
     func updateMovies() {
         self.currentPage = self.currentPage + 1        
-        MovieServices.upcomingMovies(with: self.currentPage) { [weak self](response) in
+        MovieServices.getMovies(with: self.listType, page: self.currentPage) { [weak self](response) in
             guard let strongSelf = self else { return }
             switch response {
             case let .Failure(error):

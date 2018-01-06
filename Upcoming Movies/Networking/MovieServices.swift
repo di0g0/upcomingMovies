@@ -35,11 +35,11 @@ class MovieServices : APIClient {
             completion(.Success(movieResponse))
         }
     }
-    
-    class func upcomingMovies(with page:Int, completion:@escaping ((Result<PagedMovieResponse>) -> Void)) {
-        getMovieList(with: Constants.API.upcomingPath, query: nil, page: page, completion: completion)
-    }
         
+    class func getMovies(with listType:MovieListType, page:Int, completion:@escaping ((Result<PagedMovieResponse>) -> Void)) {
+        getMovieList(with: listType.getURLPath(), query: nil, page: page, completion: completion)
+    }
+    
     class func searchMovies(with term:String, page:Int, completion:@escaping ((Result<PagedMovieResponse>) -> Void)) {
         getMovieList(with: Constants.API.searchPath, query: term,page: page, completion: completion)
     }

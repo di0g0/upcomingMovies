@@ -25,6 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             [NSAttributedStringKey.foregroundColor: UIColor.orange]
         
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
+        
+        UITabBar.appearance().isTranslucent = true
+        UITabBar.appearance().tintColor = .darkBackground
+        UITabBar.appearance().barTintColor = .orange
+        
+        UIToolbar.appearance().isTranslucent = true
+        UIToolbar.appearance().tintColor = .orange
+        UIToolbar.appearance().barTintColor = .darkBackground
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {

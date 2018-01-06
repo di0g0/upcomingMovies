@@ -10,7 +10,12 @@ import UIKit
 
 class UpcomingMoviesViewController: MovieListBaseViewController {
     private static let openMovieDetailSegue = "openMovieDetailSegue"
-            
+    
+    let upcomingListViewModel = MovieListViewModel(listType: .Upcoming)
+    let nowPlayingListViewModel = MovieListViewModel(listType: .NowPlaying)
+    
+    @IBOutlet weak var segmentedControll: UISegmentedControl!
+    
     func loadMoreMovies() {
         if movieListViewModel.canLoadMore {
             self.loadingMoreView.startAnimating()
@@ -19,15 +24,44 @@ class UpcomingMoviesViewController: MovieListBaseViewController {
     }
     
     func setupNavigationBar() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .always
-        self.title = LocationManager.upcomingMoviesTitle
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.largeTitleDisplayMode = .never
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.title = LocationManager.moviesTitle
     }
-        
+    
+    func setupListType() {
+        updateListType(sender: self.segmentedControll)
+    }
+    
+    @objc func updateListType(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 1:
+            self.movieListViewModel = self.nowPlayingListViewModel
+        default:
+            self.movieListViewModel = self.upcomingListViewModel
+        }
+        self.movieListViewModel.onMoviesUpdated = { [weak self] in
+            guard let strongSelf = self else { return }
+            DispatchQueue.main.async {
+                strongSelf.onMoviesUpdated()
+            }
+        }
+        self.tableView.reloadData()
+        self.loadMoreMovies()
+    }
+    
+    fileprivate func setupSegmentedControll() {
+        self.segmentedControll.setTitle(LocationManager.upcomingMoviesTitle, forSegmentAt: 0)
+        self.segmentedControll.setTitle(LocationManager.nowPlayingMoviesTitle, forSegmentAt: 1)
+        self.segmentedControll.addTarget(self, action: #selector(updateListType(sender:)), for: .valueChanged)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()                
-        self.loadMoreMovies()
+        self.setupSegmentedControll()
+        self.setupNavigationBar()
+        self.setupListType()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
