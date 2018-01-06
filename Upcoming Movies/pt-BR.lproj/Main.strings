@@ -30,7 +30,7 @@
 "aY1-Sv-eAa.text" = "Sinopse";
 
 /* Class = "UILabel"; text = "Release date:"; ObjectID = "eYw-LY-oov"; */
-"eYw-LY-oov.text" = "Data de lançamento:";
+"eYw-LY-oov.text" = "Lançamento em:";
 
 /* Class = "UILabel"; text = "Drama, Suspense"; ObjectID = "mWM-wm-Zmd"; */
 "mWM-wm-Zmd.text" = "Drama, Suspense";
