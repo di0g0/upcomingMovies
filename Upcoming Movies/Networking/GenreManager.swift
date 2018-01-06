@@ -10,12 +10,16 @@ class GenreManager {
     static var genreList:[Genre] = []
     
     class func updateGenreList() {
-        APIClient.getGenreList { (jsonList,success) in
-            guard success, let list = jsonList else {return}
-            genreList.removeAll()
-            for item in list {
-                if let genre = Genre.fromJson(jsonObject: item) {
-                    genreList.append(genre)
+        ConfigServices.getGenreList { (response) in
+            switch response {
+            case let .Failure(error):
+                print(error)
+            case let .Success(genreResponse):
+                genreList.removeAll()
+                for item in genreResponse.genreList {
+                    if let genre = Genre.fromJson(jsonObject: item) {
+                        genreList.append(genre)
+                    }
                 }
             }
         }        

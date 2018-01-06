@@ -31,17 +31,27 @@ class MovieListViewModel {
     
     func updateMovies() {
         self.currentPage = self.currentPage + 1        
-        APIClient.upcomingMovies(with: self.currentPage) { [weak self](jsonList, moreResults) in
+        MovieServices.upcomingMovies(with: self.currentPage) { [weak self](response) in
             guard let strongSelf = self else { return }
-            strongSelf.canLoadMore = moreResults
-            strongSelf.movies += strongSelf.parseMoviesFrom(jsonResponse: jsonList)
+            switch response {
+            case let .Failure(error):
+                print(error)                
+            case let .Success(pagedResponse):
+                strongSelf.canLoadMore = (strongSelf.currentPage < pagedResponse.totalPages)
+                strongSelf.movies += strongSelf.parseMoviesFrom(jsonResponse: pagedResponse.movieList)
+            }
         }
     }
     
     func searchMovies(searchQuery:String) {
-        APIClient.searchMovies(with: searchQuery, page: 1) {[weak self] (jsonList, moreResults) in
+        MovieServices.searchMovies(with: searchQuery, page: 1) {[weak self] (response) in
             guard let strongSelf = self else { return }
-            strongSelf.movies = strongSelf.parseMoviesFrom(jsonResponse: jsonList)
+            switch response {
+            case let .Failure(error):
+                print(error)
+            case let .Success(pagedResponse):
+                strongSelf.movies = strongSelf.parseMoviesFrom(jsonResponse: pagedResponse.movieList)
+            }
         }
     }
 }

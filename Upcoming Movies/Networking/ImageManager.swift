@@ -14,11 +14,13 @@ class ImageManager {
     private static let detailBackdropWidth:String = "w1280"
     
     class func updateImageConfig() {
-        APIClient.getConfig(completion: { (imageBaseUrl,success) in
-            guard let baseUrl = imageBaseUrl, success else {
-                return
+        ConfigServices.getConfig(completion: { (response) in
+            switch response {
+            case let .Failure(error):
+                print(error)
+            case let .Success(configResponse):
+                baseImageUrl = configResponse.imageBaseUrl
             }
-            baseImageUrl = baseUrl
         })
     }
     
