@@ -7,8 +7,27 @@
 //
 
 import Foundation
-struct MovieViewModel {
-    private let movie: Movie
+class MovieViewModel {
+    private var movie: Movie {
+        didSet {
+            self.onMovieUpdated?()
+        }
+    }
+    
+    var onMovieUpdated: (()->())?
+    
+    var directorName: String? {
+        return movie.director?.name.capitalized
+    }
+    
+    var cast:[CastPersonViewModel] {
+        let castVMs:[CastPersonViewModel] = movie.cast.map {CastPersonViewModel(person:$0)}
+        return castVMs
+    }
+    
+    var id:Int {
+        return movie.identifier
+    }
     
     var title:String {
         return movie.title.capitalized
@@ -34,6 +53,25 @@ struct MovieViewModel {
         self.movie = movie
     }
     
+    var avgRatingString: String {
+        guard let rating = self.movie.avgRating else {
+            return "--"
+        }
+        
+        return String(format: "%.1f", rating)
+    }
+    
+    var yearString: String {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "yyyy"
+        return dateFormater.string(from: self.movie.releaseDate)
+    }
+    
+    var timeString: String? {
+        guard let time = self.movie.runTime else {return nil}
+        return "\(time) min."
+    }
+    
     var releaseDateString: String {
         let dateFormater = DateFormatter()
         dateFormater.dateStyle = .medium
@@ -46,5 +84,17 @@ struct MovieViewModel {
         let string = stringArray.joined(separator: ", ")
         
         return string
+    }
+    
+    func getDetails() {
+        MovieServices.getDetail(for: movie.identifier) {[weak self] (response) in
+            guard let strongSelf = self else { return }
+            switch response {
+            case let .Failure(error):
+                print(error)
+            case let .Success(movieResponse):
+                strongSelf.movie.updateWith(jsonObject: movieResponse.movieJson)
+            }
+        }
     }
 }

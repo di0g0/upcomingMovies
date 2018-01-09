@@ -10,9 +10,17 @@ import UIKit
 
 protocol MovieListBaseViewControllerDelegate {
     func onMoviesUpdated()
+    func loadMoreMovies()
 }
 
 class MovieListBaseViewController : UIViewController, MovieListBaseViewControllerDelegate {
+    func loadMoreMovies() {
+        if movieListViewModel.canLoadMore {
+            self.loadingMoreView.startAnimating()
+            self.movieListViewModel.updateMovies()
+        }
+    }
+    
     func onMoviesUpdated() {
         self.loadingMoreView.stopAnimating()
         self.tableView.reloadData()
@@ -32,11 +40,18 @@ class MovieListBaseViewController : UIViewController, MovieListBaseViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTableView()
-        self.movieListViewModel.onMoviesUpdated = { [weak self] in
+        self.movieListViewModel.onMoviesUpdated = { [weak self] (error)in
             guard let strongSelf = self else { return }
             DispatchQueue.main.async {
                 strongSelf.onMoviesUpdated()
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "openMovieDetailSegue",
+            let detailViewController = segue.destination as? MovieDetailViewController,
+            let indexPath = self.tableView.indexPathForSelectedRow else { return }
+        detailViewController.movie = self.movieListViewModel.movies[indexPath.row]
     }
 }

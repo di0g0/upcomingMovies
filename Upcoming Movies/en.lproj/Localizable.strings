@@ -7,6 +7,15 @@
 */
 
 "Movies Title" = "Movies";
-"Upcoming Movies" = "Upcoming Movies";
+"Upcoming" = "Upcoming";
 "Search movies" = "Search movies";
 "Now In Theaters" = "Now In Theaters";
+"Popular" = "Popular";
+
+"Genre" = "Genre";
+"Release date" = "Release date";
+"Original Title" = "Original Title";
+"Overview" = "Overview";
+"Cast" = "Cast";
+"Director" = "Director";
+"Details" = "Details";

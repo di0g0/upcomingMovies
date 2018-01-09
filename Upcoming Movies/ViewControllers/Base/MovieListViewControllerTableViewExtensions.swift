@@ -7,6 +7,11 @@
 //
 import UIKit
 extension MovieListBaseViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if (indexPath.row == self.movieListViewModel.movies.count - 1) {
+            self.loadMoreMovies()
+        }
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }        

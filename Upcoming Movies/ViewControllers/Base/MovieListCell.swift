@@ -9,17 +9,17 @@
 import UIKit
 import Kingfisher
 
-class MovieListCell: UITableViewCell {
-    static let identifier = "MovieListCell"
+class MovieListCell: MovieTableViewCell,MovieTableViewCellProtocol {
     static let movieCellHeight:CGFloat = 150.0
     
+    @IBOutlet weak var avgRatingLabel: UILabel!
     @IBOutlet weak var movieNameLabel: UILabel!
     @IBOutlet weak var movieGendersLabel: UILabel!
     @IBOutlet weak var movieImagePicture: UIImageView! {
         didSet {
             movieImagePicture.layer.cornerRadius = 6
             movieImagePicture.clipsToBounds = true
-            movieImagePicture.kf.indicatorType = .activity
+            movieImagePicture.kf.indicatorType = .activity            
         }
     }
     
@@ -29,7 +29,7 @@ class MovieListCell: UITableViewCell {
         movieImagePicture.image = nil
     }
     
-    func fill(with movie: MovieViewModel) {
+    override func fill(with movie: MovieViewModel) {
         self.movieNameLabel.text = movie.title
         if let pictureUrl = movie.pictureUrl {
             let placeholder:UIImage = .posterPlaceholder    
@@ -37,6 +37,7 @@ class MovieListCell: UITableViewCell {
         }
         self.releaseDateLabel.text = movie.releaseDateString
         self.movieGendersLabel.text = movie.genreListString
+        self.avgRatingLabel.text = movie.avgRatingString
     }
 }
 

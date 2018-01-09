@@ -17,21 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate func setupAppearance() {
         UIApplication.shared.statusBarStyle = .lightContent
         UINavigationBar.appearance().isTranslucent = true        
-        UINavigationBar.appearance().tintColor = .orange
+        UINavigationBar.appearance().tintColor = .movieOrange
         UINavigationBar.appearance().barTintColor = .darkBackground
         UINavigationBar.appearance().titleTextAttributes =
-            [NSAttributedStringKey.foregroundColor: UIColor.orange]
+            [NSAttributedStringKey.foregroundColor: UIColor.movieOrange]
         UINavigationBar.appearance().largeTitleTextAttributes =
-            [NSAttributedStringKey.foregroundColor: UIColor.orange]
+            [NSAttributedStringKey.foregroundColor: UIColor.movieOrange]
         
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
         
         UITabBar.appearance().isTranslucent = true
         UITabBar.appearance().tintColor = .darkBackground
-        UITabBar.appearance().barTintColor = .orange
+        UITabBar.appearance().barTintColor = .movieOrange
         
         UIToolbar.appearance().isTranslucent = true
-        UIToolbar.appearance().tintColor = .orange
+        UIToolbar.appearance().tintColor = .movieOrange
         UIToolbar.appearance().barTintColor = .darkBackground
     }
     

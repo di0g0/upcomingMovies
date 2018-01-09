@@ -3,17 +3,20 @@ PODS:
   - AlamofireNetworkActivityIndicator (2.2.0):
     - Alamofire (~> 4.5)
   - Kingfisher (4.5.0)
+  - ParallaxHeader (2.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - AlamofireNetworkActivityIndicator (~> 2.2)
   - Kingfisher (~> 4.0)
+  - ParallaxHeader (~> 2.0.0)
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   AlamofireNetworkActivityIndicator: 81e1630e7cfed22a4e4e82a174c59e651dc4f8ca
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  ParallaxHeader: fb6ee97915626454f3c029a97b424f79a777c642
 
-PODFILE CHECKSUM: f32fdc58b62df382152c194727236298f6d7cb67
+PODFILE CHECKSUM: f94cf47239557b6a187eaf30a1a28405e543bcf8
 
 COCOAPODS: 1.3.1

@@ -11,18 +11,17 @@ import UIKit
 class UpcomingMoviesViewController: MovieListBaseViewController {
     private static let openMovieDetailSegue = "openMovieDetailSegue"
     
-    let upcomingListViewModel = MovieListViewModel(listType: .Upcoming)
-    let nowPlayingListViewModel = MovieListViewModel(listType: .NowPlaying)
-    
-    @IBOutlet weak var segmentedControll: UISegmentedControl!
-    
-    func loadMoreMovies() {
-        if movieListViewModel.canLoadMore {
-            self.loadingMoreView.startAnimating()
-            self.movieListViewModel.updateMovies()
+    @IBOutlet weak var toolbar: UIToolbar! {
+        didSet {
+            toolbar.delegate = self
         }
     }
+    let upcomingListViewModel = MovieListViewModel(listType: .Upcoming)
+    let nowPlayingListViewModel = MovieListViewModel(listType: .NowPlaying)
+    let popularListViewModel = MovieListViewModel(listType: .Popular)
     
+    @IBOutlet weak var segmentedControll: UISegmentedControl!
+        
     func setupNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.largeTitleDisplayMode = .never
@@ -36,13 +35,18 @@ class UpcomingMoviesViewController: MovieListBaseViewController {
     
     @objc func updateListType(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
+        case 0:
+            self.movieListViewModel = self.popularListViewModel
         case 1:
             self.movieListViewModel = self.nowPlayingListViewModel
         default:
             self.movieListViewModel = self.upcomingListViewModel
         }
-        self.movieListViewModel.onMoviesUpdated = { [weak self] in
+        self.movieListViewModel.onMoviesUpdated = { [weak self] (error) in
             guard let strongSelf = self else { return }
+            if let error = error {
+                print (error)
+            }
             DispatchQueue.main.async {
                 strongSelf.onMoviesUpdated()
             }
@@ -51,9 +55,11 @@ class UpcomingMoviesViewController: MovieListBaseViewController {
         self.loadMoreMovies()
     }
     
-    fileprivate func setupSegmentedControll() {
-        self.segmentedControll.setTitle(LocationManager.upcomingMoviesTitle, forSegmentAt: 0)
+    fileprivate func setupSegmentedControll() {        
+        self.segmentedControll.setTitle(LocationManager.popularMoviesTitle, forSegmentAt: 0)
         self.segmentedControll.setTitle(LocationManager.nowPlayingMoviesTitle, forSegmentAt: 1)
+        self.segmentedControll.setTitle(LocationManager.upcomingMoviesTitle, forSegmentAt: 2)
+        
         self.segmentedControll.addTarget(self, action: #selector(updateListType(sender:)), for: .valueChanged)
     }
     
@@ -62,19 +68,11 @@ class UpcomingMoviesViewController: MovieListBaseViewController {
         self.setupSegmentedControll()
         self.setupNavigationBar()
         self.setupListType()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == UpcomingMoviesViewController.openMovieDetailSegue,
-            let detailViewController = segue.destination as? MovieDetailViewController,
-            let indexPath = self.tableView.indexPathForSelectedRow {
-            detailViewController.movie = self.movieListViewModel.movies[indexPath.row]
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if (indexPath.row == self.movieListViewModel.movies.count - 1) {
-            self.loadMoreMovies()
-        }
+    }    
+}
+
+extension UpcomingMoviesViewController: UIToolbarDelegate {
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
     }
 }

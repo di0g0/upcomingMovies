@@ -10,17 +10,7 @@ enum MovieListType {
     case Search
     case Upcoming
     case NowPlaying
-    
-    init(tabBarIndex:Int) {
-        switch tabBarIndex {
-        case 0:
-            self = .Upcoming
-        case 1:
-            self = .NowPlaying                
-        default:
-            self = .Upcoming
-        }
-    }
+    case Popular
     
     func getURLPath() -> String {
         switch self {
@@ -30,6 +20,8 @@ enum MovieListType {
             return Constants.API.nowPlayingPath
         case .Search:
             return Constants.API.searchPath
+        case .Popular:
+            return Constants.API.popularPath
         }
     }
     
@@ -41,6 +33,8 @@ enum MovieListType {
             return LocationManager.nowPlayingMoviesTitle
         case .Search:
             return LocationManager.searchMoviesPlaceholder
+        case .Popular:
+            return LocationManager.popularMoviesTitle
         }
     }
 }
@@ -49,16 +43,23 @@ class MovieListViewModel {
     private var currentPage = 0
     var canLoadMore = true
     
-    var onMoviesUpdated: (()->())?
-    let listType:MovieListType
+    var searchQuery: String?
+    var onMoviesUpdated: ((Error?)->())?
+    var listType:MovieListType
     
     init(listType: MovieListType) {
         self.listType = listType
     }
     
+    func resetList() {
+        self.movies.removeAll()
+        self.currentPage = 0
+        self.canLoadMore = true
+    }
+    
     internal var movies:[MovieViewModel] = [MovieViewModel]() {
         didSet{
-            self.onMoviesUpdated?()
+            self.onMoviesUpdated?(nil)
         }
     }
     
@@ -74,12 +75,12 @@ class MovieListViewModel {
     }
     
     func updateMovies() {
-        self.currentPage = self.currentPage + 1        
-        MovieServices.getMovies(with: self.listType, page: self.currentPage) { [weak self](response) in
+        self.currentPage = self.currentPage + 1
+        MovieServices.getMovies(with: self.listType, query: self.searchQuery, page: self.currentPage) {[weak self] (response) in
             guard let strongSelf = self else { return }
             switch response {
             case let .Failure(error):
-                print(error)                
+                strongSelf.onMoviesUpdated?(error)
             case let .Success(pagedResponse):
                 strongSelf.canLoadMore = (strongSelf.currentPage < pagedResponse.totalPages)
                 strongSelf.movies += strongSelf.parseMoviesFrom(jsonResponse: pagedResponse.movieList)
@@ -88,14 +89,8 @@ class MovieListViewModel {
     }
     
     func searchMovies(searchQuery:String) {
-        MovieServices.searchMovies(with: searchQuery, page: 1) {[weak self] (response) in
-            guard let strongSelf = self else { return }
-            switch response {
-            case let .Failure(error):
-                print(error)
-            case let .Success(pagedResponse):
-                strongSelf.movies = strongSelf.parseMoviesFrom(jsonResponse: pagedResponse.movieList)
-            }
-        }
+        self.searchQuery = searchQuery
+        self.resetList()
+        self.updateMovies()
     }
 }

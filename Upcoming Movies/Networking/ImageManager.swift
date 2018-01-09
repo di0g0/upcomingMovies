@@ -11,6 +11,7 @@ import Foundation
 class ImageManager {
     private static var baseImageUrl:String?
     private static let posterCellWidth:String = "w185"
+    private static let castWidth:String = "w60"
     private static let detailBackdropWidth:String = "w1280"
     
     class func updateImageConfig() {
@@ -37,6 +38,10 @@ class ImageManager {
     
     class func posterImageUrl(with imagePath: String?) -> URL? {
         return imageUrl(with: imagePath, widthParam: ImageManager.posterCellWidth)
+    }
+    
+    class func castImageUrl(with imagePath: String?) -> URL? {
+        return imageUrl(with: imagePath, widthParam: "original")
     }
 }
 

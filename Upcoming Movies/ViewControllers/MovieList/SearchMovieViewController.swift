@@ -19,7 +19,7 @@ class SearchMovieViewController: MovieListBaseViewController {
         return searchBar
     }()
     
-    private func setupSearchBar() {        
+    private func setupSearchBar() {
         self.searchBar.delegate = self
         self.navigationItem.titleView = self.searchBar
         self.searchBar.becomeFirstResponder()
@@ -27,6 +27,7 @@ class SearchMovieViewController: MovieListBaseViewController {
     
     @objc func searchMovies(timer: Timer) {
         if let text = timer.userInfo as? String {
+            self.loadingMoreView.startAnimating()
             self.movieListViewModel.searchMovies(searchQuery: text)
         }
     }
@@ -43,7 +44,8 @@ class SearchMovieViewController: MovieListBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()        
+        self.setupNavigationBar()
+        self.movieListViewModel.listType = .Search
         self.setupSearchBar()        
     }
     
@@ -55,13 +57,10 @@ class SearchMovieViewController: MovieListBaseViewController {
         self.searchBar.resignFirstResponder()
         self.dismiss(animated: true, completion: nil)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         self.searchBar.resignFirstResponder()
-        if segue.identifier == SearchMovieViewController.openMovieDetailSegue,
-            let detailViewController = segue.destination as? MovieDetailViewController,
-            let indexPath = self.tableView.indexPathForSelectedRow {
-            detailViewController.movie = self.movieListViewModel.movies[indexPath.row]
-        }
+        super.prepare(for: segue, sender: sender)
     }
 }
 
@@ -72,7 +71,7 @@ extension SearchMovieViewController: UISearchBarDelegate {
         if searchText.count > 0 {
             self.keyboardTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(searchMovies(timer:)), userInfo: searchText, repeats: false)
         } else {
-            self.movieListViewModel.movies.removeAll()            
+            self.movieListViewModel.resetList()
         }
     }
     

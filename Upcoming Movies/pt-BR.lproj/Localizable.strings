@@ -7,6 +7,15 @@
 */
 
 "Movies Title" = "Filmes";
-"Upcoming Movies" = "Em breve";
+"Upcoming" = "Em Breve";
 "Search movies" = "Procurar filmes";
-"Now In Theaters" = "Em cartaz";
+"Now In Theaters" = "Em Cartaz";
+"Popular" = "Populares";
+
+"Genre" = "Gênero";
+"Release date" = "Data de lançamento";
+"Original Title" = "Título Original";
+"Overview" = "Resumo";
+"Cast" = "Elenco";
+"Director" = "Diretor";
+"Details" = "Detalhes";

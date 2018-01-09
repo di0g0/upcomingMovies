@@ -61,8 +61,8 @@ class MovieTests : XCTestCase {
     func testGetUpcomingMovies() {
         let testExpectation = expectation(description: "Test getting upcoming Movies")
         
-        let listViewModel = MovieListViewModel()
-        listViewModel.onMoviesUpdated = {
+        let listViewModel = MovieListViewModel(listType: .Upcoming)
+        listViewModel.onMoviesUpdated = {(error) in
             dump(listViewModel.movies)
             XCTAssert(listViewModel.movies.count > 0)
             testExpectation.fulfill()

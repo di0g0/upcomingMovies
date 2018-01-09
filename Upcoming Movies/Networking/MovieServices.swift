@@ -16,6 +16,14 @@ struct PagedMovieResponse {
     }
 }
 
+struct MovieDetailResponse {
+    let movieJson:JSONObject
+    
+    init(movieJson:JSONObject) {
+        self.movieJson = movieJson
+    }
+}
+
 class MovieServices : APIClient {
     private class func getMovieList(with path:String, query:String?, page:Int, completion:@escaping ((Result<PagedMovieResponse>) -> Void)) {
         let params = [
@@ -36,11 +44,22 @@ class MovieServices : APIClient {
         }
     }
         
-    class func getMovies(with listType:MovieListType, page:Int, completion:@escaping ((Result<PagedMovieResponse>) -> Void)) {
-        getMovieList(with: listType.getURLPath(), query: nil, page: page, completion: completion)
+    class func getMovies(with listType:MovieListType, query:String?, page:Int, completion:@escaping ((Result<PagedMovieResponse>) -> Void)) {
+        getMovieList(with: listType.getURLPath(), query: query, page: page, completion: completion)
     }
-    
-    class func searchMovies(with term:String, page:Int, completion:@escaping ((Result<PagedMovieResponse>) -> Void)) {
-        getMovieList(with: Constants.API.searchPath, query: term,page: page, completion: completion)
+        
+    class func getDetail(for movieId:Int, completion:@escaping ((Result<MovieDetailResponse>) -> Void)) {
+        let moviePath = "/movie/\(movieId)"
+        let params = [
+                    Constants.RequestParams.append : Constants.RequestParams.videosAndImages,                    
+            ]
+        
+        request(urlPath: moviePath, params: params) { (responseJSON, error) in
+            guard let response = responseJSON else {
+                    completion(.Failure(error ?? APIClientError.jsonParsingError))
+                    return
+            }
+            completion(.Success(MovieDetailResponse(movieJson: response)))
+        }
     }
 }

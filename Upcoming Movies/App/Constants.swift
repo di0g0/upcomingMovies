@@ -11,6 +11,7 @@ struct Constants {
         internal static let apiBaseURL = "https://api.themoviedb.org/3"        
         internal static let upcomingPath = "/movie/upcoming"
         internal static let nowPlayingPath = "/movie/now_playing"
+        internal static let popularPath = "/movie/popular"
         internal static let movieDetailPath = "/movie/"
         internal static let genresPath = "/genre/movie/list"
         internal static let configPath = "/configuration"
@@ -26,7 +27,7 @@ struct Constants {
         internal static let query = "query"
         internal static let movieId = "movie_id"
         internal static let append = "append_to_response"
-        internal static let videosAndImages = "videos,images"
+        internal static let videosAndImages = "videos,images,credits"
     }
     
     struct ResponseParams {
@@ -44,5 +45,13 @@ struct Constants {
         internal static let backdrop = "backdrop_path"
         internal static let releaseDate = "release_date"
         internal static let originalTitle = "original_title"
+        internal static let avgRating = "vote_average"
+        internal static let credits = "credits"
+        internal static let runtime = "runtime"
+        internal static let cast = "cast"
+        internal static let crew = "crew"
+        internal static let character = "character"
+        internal static let profilePath = "profile_path"
+        internal static let videos = "videos"
     }
 }
