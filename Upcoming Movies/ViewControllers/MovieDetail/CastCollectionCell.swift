@@ -16,7 +16,7 @@ class CastCollectionCell: UICollectionViewCell {
     @IBOutlet weak var profilePicture: UIImageView! {
         didSet {
             profilePicture.clipsToBounds = true
-            profilePicture.layer.cornerRadius = 4
+            profilePicture.layer.cornerRadius = .movieCornerRadius
             profilePicture.kf.indicatorType = .activity
         }
     }

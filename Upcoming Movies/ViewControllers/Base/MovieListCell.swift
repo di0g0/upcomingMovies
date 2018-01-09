@@ -17,13 +17,11 @@ class MovieListCell: MovieTableViewCell,MovieTableViewCellProtocol {
     @IBOutlet weak var movieGendersLabel: UILabel!
     @IBOutlet weak var movieImagePicture: UIImageView! {
         didSet {
-            movieImagePicture.layer.cornerRadius = 6
+            movieImagePicture.layer.cornerRadius = .movieCornerRadius
             movieImagePicture.clipsToBounds = true
             movieImagePicture.kf.indicatorType = .activity            
         }
     }
-    
-    @IBOutlet weak var releaseDateLabel: UILabel!
     
     override func prepareForReuse() {
         movieImagePicture.image = nil
@@ -35,7 +33,6 @@ class MovieListCell: MovieTableViewCell,MovieTableViewCellProtocol {
             let placeholder:UIImage = .posterPlaceholder    
             self.movieImagePicture.kf.setImage(with: pictureUrl, placeholder: placeholder, options: nil, progressBlock: nil, completionHandler: nil)
         }
-        self.releaseDateLabel.text = movie.releaseDateString
         self.movieGendersLabel.text = movie.genreListString
         self.avgRatingLabel.text = movie.avgRatingString
     }

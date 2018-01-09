@@ -13,6 +13,7 @@ extension MovieListBaseViewController : UITableViewDelegate {
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: MovieListBaseViewController.openMovieDetailSegue, sender: nil)
         tableView.deselectRow(at: indexPath, animated: true)
     }        
 }

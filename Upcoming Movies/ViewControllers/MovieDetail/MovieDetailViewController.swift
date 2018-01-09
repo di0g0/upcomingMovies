@@ -9,6 +9,8 @@
 import UIKit
 import Kingfisher
 import ParallaxHeader
+import XCDYouTubeKit
+import AVKit
 
 enum MovieDetailSection {
     case header
@@ -25,17 +27,26 @@ struct SectionObject {
     let sectionTitle:String
 }
 
+extension CGFloat {
+    static let movieCornerRadius:CGFloat = 6.0
+    static let blurMinimumAlpha:CGFloat = 0.3
+}
+
+extension Double {
+    static let animationDuration = 0.3
+}
+
 class MovieDetailHeaderView: UIView, MovieTableViewCellProtocol {
     @IBOutlet weak var posterImageView: UIImageView! {
         didSet {
-            posterImageView.layer.cornerRadius = 6
+            posterImageView.layer.cornerRadius = .movieCornerRadius
             posterImageView.clipsToBounds = true
             posterImageView.kf.indicatorType = .activity
         }
     }
     @IBOutlet weak var backgroundImageView: UIImageView! {
         didSet {
-            backgroundImageView.blurView.setup(style: UIBlurEffectStyle.dark, alpha: 0).enable()
+            backgroundImageView.blurView.setup(style: UIBlurEffectStyle.dark, alpha: .blurMinimumAlpha).enable()
         }
     }
     @IBOutlet weak var movieTitleLabel: UILabel!
@@ -66,6 +77,24 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var topSpaceConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomSpaceConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var parallaxView: UIView!
+    @IBOutlet weak var watchTrailerButton: UIButton! {
+        didSet {
+            watchTrailerButton.layer.borderColor = UIColor.contentTextColor.cgColor
+            watchTrailerButton.layer.borderWidth = 1
+            watchTrailerButton.layer.cornerRadius = 16
+            watchTrailerButton.layer.masksToBounds = true
+            let blur = UIVisualEffectView(effect: UIBlurEffect(style:
+                UIBlurEffectStyle.dark))
+            blur.frame = watchTrailerButton.bounds
+            blur.isUserInteractionEnabled = false
+            watchTrailerButton.bringSubview(toFront: watchTrailerButton.imageView!)
+            blur.alpha = 0.8
+            watchTrailerButton.insertSubview(blur, at: 0)
+            watchTrailerButton.setTitle(LocationManager.watchTrailer, for: .normal)            
+            watchTrailerButton.invalidateIntrinsicContentSize()
+        }
+    }
     @IBOutlet weak var headerView: MovieDetailHeaderView!
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -77,7 +106,28 @@ class MovieDetailViewController: UIViewController {
     }
     
     
-    
+    @IBAction func playTrailer(_ sender: Any) {
+        if let videoId = movie?.trailerKey {
+            let playerViewController = AVPlayerViewController()
+            self.present(playerViewController, animated: true, completion: nil)
+            XCDYouTubeClient.default().getVideoWithIdentifier(videoId, completionHandler: {[weak playerViewController] (video, error) in
+                guard let playerViewController = playerViewController, let video = video else {
+                    self.dismiss(animated: true, completion: nil)
+                    return
+                }
+                let streams = video.streamURLs
+                if let streamUrl = streams[XCDYouTubeVideoQualityHTTPLiveStreaming] ?? streams[XCDYouTubeVideoQuality.HD720.rawValue] ??
+                    streams[XCDYouTubeVideoQuality.medium360.rawValue] ??
+                    streams[XCDYouTubeVideoQuality.small240.rawValue]
+                {
+                    
+                    playerViewController.player  = AVPlayer(url: streamUrl)
+                    playerViewController.player?.play()
+                }
+                
+            })
+        }
+    }
     @IBOutlet weak var backdropImage: UIImageView! {
         didSet {
             backdropImage.kf.indicatorType = .activity
@@ -88,10 +138,11 @@ class MovieDetailViewController: UIViewController {
         SectionObject(sectionRows: [.genres,.overview], sectionTitle: ""),
         SectionObject(sectionRows: [.releaseDate, .originalTitle,.director], sectionTitle: LocationManager.details),
         SectionObject(sectionRows: [.cast], sectionTitle: LocationManager.cast),
-    ]
+        ]
     
     func fillData(with movie:MovieViewModel) {
         self.headerView.fill(with: movie)
+        self.watchTrailerButton.isHidden = movie.trailerKey == nil
         self.tableView.reloadData()
     }
     
@@ -99,7 +150,6 @@ class MovieDetailViewController: UIViewController {
         if let indexPath = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRow(at: indexPath, animated: true)
         }
-        
         if segue.identifier == "openCastSegue",
             let castViewController = segue.destination as? CastViewController,
             let movie = self.movie
@@ -118,7 +168,7 @@ class MovieDetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         if let navController = self.navigationController {
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: .animationDuration, animations: {
                 navController.navigationBar.titleTextAttributes =
                     [NSAttributedStringKey.foregroundColor: UIColor.movieOrange]
                 navController.navigationBar.tintColor = UIColor.movieOrange
@@ -129,28 +179,30 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupHeaderView() {
-        tableView.parallaxHeader.view = self.headerView.backgroundImageView
-        tableView.parallaxHeader.height = self.headerView.backgroundImageView.frame.height
-        tableView.parallaxHeader.minimumHeight = (self.navigationController?.navigationBar.frame.maxY)!
+        tableView.parallaxHeader.view = self.parallaxView
+        tableView.parallaxHeader.height = self.parallaxView.frame.height
+        tableView.parallaxHeader.minimumHeight =  (self.navigationController?.navigationBar.frame.maxY)!
         tableView.parallaxHeader.mode = .centerFill
         tableView.parallaxHeader.parallaxHeaderDidScrollHandler = { [weak self] parallaxHeader in
             guard let strongSelf = self else {
                 return
             }
-            let alpha = 1 - parallaxHeader.progress
-            parallaxHeader.view.blurView.alpha = alpha < 0.4 ? 0.4 : alpha
-            if alpha >= 1{
-                strongSelf.title = strongSelf.movie?.title
-                strongSelf.tableView.sendSubview(toBack: strongSelf.headerView)
-            } else {
-                strongSelf.title = ""
-                strongSelf.tableView.bringSubview(toFront: strongSelf.headerView)
-            }
+            UIView.animate(withDuration: 0.3, animations: {
+                let alpha = 1 - parallaxHeader.progress
+                strongSelf.backdropImage.blurView.alpha = alpha < .blurMinimumAlpha ? .blurMinimumAlpha : alpha
+                if alpha >= 1{
+                    strongSelf.title = strongSelf.movie?.title
+                    strongSelf.headerView.alpha = 0
+                } else {
+                    strongSelf.title = ""
+                    strongSelf.headerView.alpha = 1
+                }
+            })
         }
         self.headerView.clipsToBounds = false
-        self.headerView.frame.size.height = self.headerView.frame.size.height - self.headerView.backgroundImageView.frame.height
+        self.headerView.frame.size.height = self.headerView.frame.size.height - self.parallaxView.frame.height
         self.tableView.bringSubview(toFront: self.headerView)
-        tableView.parallaxHeader.view.blurView.alpha = 0.4
+        self.tableView.parallaxHeader.view.addSubview(watchTrailerButton)
     }
     
     fileprivate func setupNavigationBar() {

@@ -47,6 +47,9 @@
 		DD6777A51FF856D900E5BB51 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6777A41FF856D900E5BB51 /* MovieDetailViewController.swift */; };
 		DD6777A61FF856D900E5BB51 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6777A41FF856D900E5BB51 /* MovieDetailViewController.swift */; };
 		DD6777A71FF856D900E5BB51 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6777A41FF856D900E5BB51 /* MovieDetailViewController.swift */; };
+		DD6B861C200526590012C009 /* MovieListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD6B861B200526590012C009 /* MovieListCell.xib */; };
+		DD6B861D200526590012C009 /* MovieListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD6B861B200526590012C009 /* MovieListCell.xib */; };
+		DD6B861E200526590012C009 /* MovieListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD6B861B200526590012C009 /* MovieListCell.xib */; };
 		DD755A1F1FFFC4AD00DBB83F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2E95D31FFC6DB600632BD4 /* Constants.swift */; };
 		DD755A201FFFC4AD00DBB83F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2E95D31FFC6DB600632BD4 /* Constants.swift */; };
 		DD755A23200121EC00DBB83F /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD755A22200121EB00DBB83F /* LocationManager.swift */; };
@@ -144,6 +147,7 @@
 		DD5995A52003BABE006A4B21 /* UIView+Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Blur.swift"; sourceTree = "<group>"; };
 		DD6777A01FF73AE600E5BB51 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		DD6777A41FF856D900E5BB51 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		DD6B861B200526590012C009 /* MovieListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieListCell.xib; sourceTree = "<group>"; };
 		DD755A22200121EB00DBB83F /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		DD755A27200136BF00DBB83F /* MovieServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServices.swift; sourceTree = "<group>"; };
 		DD755A2B20013BFD00DBB83F /* ConfigServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigServices.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 				DD2E960A1FFEB22500632BD4 /* MovieListBaseViewController.swift */,
 				DD2E96021FFE95E500632BD4 /* MovieListViewControllerTableViewExtensions.swift */,
 				DDC0D0241FF723EE00D3E4E1 /* MovieListCell.swift */,
+				DD6B861B200526590012C009 /* MovieListCell.xib */,
 				DD755A462002976E00DBB83F /* MovieTableViewCell.swift */,
 			);
 			path = Base;
@@ -490,6 +495,7 @@
 				DDC0CFFD1FF711B200D3E4E1 /* LaunchScreen.storyboard in Resources */,
 				DD2E95E21FFC714000632BD4 /* Localizable.strings in Resources */,
 				DDC0CFFA1FF711B200D3E4E1 /* Assets.xcassets in Resources */,
+				DD6B861C200526590012C009 /* MovieListCell.xib in Resources */,
 				DDC0CFF81FF711B200D3E4E1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,6 +504,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD6B861D200526590012C009 /* MovieListCell.xib in Resources */,
 				DD2E95E31FFC714000632BD4 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,6 +513,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD6B861E200526590012C009 /* MovieListCell.xib in Resources */,
 				DD2E95E41FFC714000632BD4 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -638,6 +646,7 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ParallaxHeader/ParallaxHeader.framework",
+				"${BUILT_PRODUCTS_DIR}/XCDYouTubeKit/XCDYouTubeKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -645,6 +654,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParallaxHeader.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCDYouTubeKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

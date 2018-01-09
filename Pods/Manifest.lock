@@ -4,19 +4,22 @@ PODS:
     - Alamofire (~> 4.5)
   - Kingfisher (4.5.0)
   - ParallaxHeader (2.0.0)
+  - XCDYouTubeKit (2.5.6)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - AlamofireNetworkActivityIndicator (~> 2.2)
   - Kingfisher (~> 4.0)
   - ParallaxHeader (~> 2.0.0)
+  - XCDYouTubeKit (~> 2.5)
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   AlamofireNetworkActivityIndicator: 81e1630e7cfed22a4e4e82a174c59e651dc4f8ca
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
   ParallaxHeader: fb6ee97915626454f3c029a97b424f79a777c642
+  XCDYouTubeKit: dccfe0c17dd5c5187969ec27e93069573badb08f
 
-PODFILE CHECKSUM: f94cf47239557b6a187eaf30a1a28405e543bcf8
+PODFILE CHECKSUM: bb23774e2b06e6cf0beb563670d226d30b8ac092
 
 COCOAPODS: 1.3.1

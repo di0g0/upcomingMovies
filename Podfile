@@ -11,6 +11,7 @@ target 'Upcoming Movies' do
   pod 'Kingfisher', '~> 4.0'
   pod 'AlamofireNetworkActivityIndicator', '~> 2.2'
   pod 'ParallaxHeader', '~> 2.0.0'
+  pod "XCDYouTubeKit", "~> 2.5"
 
 
   target 'Upcoming MoviesTests' do

@@ -14,6 +14,8 @@ protocol MovieListBaseViewControllerDelegate {
 }
 
 class MovieListBaseViewController : UIViewController, MovieListBaseViewControllerDelegate {
+    static let openMovieDetailSegue = "openMovieDetailSegue"
+    
     func loadMoreMovies() {
         if movieListViewModel.canLoadMore {
             self.loadingMoreView.startAnimating()
@@ -40,6 +42,10 @@ class MovieListBaseViewController : UIViewController, MovieListBaseViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTableView()
+        self.tableView.register(UINib.init(nibName: MovieListCell.identifier,
+                                           bundle: Bundle.main),
+                                forCellReuseIdentifier: MovieListCell.identifier)
+        
         self.movieListViewModel.onMoviesUpdated = { [weak self] (error)in
             guard let strongSelf = self else { return }
             DispatchQueue.main.async {
@@ -49,7 +55,7 @@ class MovieListBaseViewController : UIViewController, MovieListBaseViewControlle
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "openMovieDetailSegue",
+        guard segue.identifier == MovieListBaseViewController.openMovieDetailSegue,
             let detailViewController = segue.destination as? MovieDetailViewController,
             let indexPath = self.tableView.indexPathForSelectedRow else { return }
         detailViewController.movie = self.movieListViewModel.movies[indexPath.row]

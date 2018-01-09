@@ -24,4 +24,6 @@ struct LocationManager {
     static let cast = NSLocalizedString("Cast", comment: "")
     static let director = NSLocalizedString("Director", comment: "")
     static let details = NSLocalizedString("Details", comment: "")
+    static let watchTrailer = NSLocalizedString("Watch Trailer", comment: "")
+    
 }

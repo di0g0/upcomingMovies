@@ -8,9 +8,7 @@
 
 import UIKit
 
-class UpcomingMoviesViewController: MovieListBaseViewController {
-    private static let openMovieDetailSegue = "openMovieDetailSegue"
-    
+class UpcomingMoviesViewController: MovieListBaseViewController {        
     @IBOutlet weak var toolbar: UIToolbar! {
         didSet {
             toolbar.delegate = self
@@ -54,8 +52,8 @@ class UpcomingMoviesViewController: MovieListBaseViewController {
         self.tableView.reloadData()
         self.loadMoreMovies()
     }
-    
-    fileprivate func setupSegmentedControll() {        
+        
+    fileprivate func setupSegmentedControll() {
         self.segmentedControll.setTitle(LocationManager.popularMoviesTitle, forSegmentAt: 0)
         self.segmentedControll.setTitle(LocationManager.nowPlayingMoviesTitle, forSegmentAt: 1)
         self.segmentedControll.setTitle(LocationManager.upcomingMoviesTitle, forSegmentAt: 2)

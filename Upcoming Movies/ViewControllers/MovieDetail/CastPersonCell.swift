@@ -9,7 +9,7 @@ import UIKit
 class CastPersonCell: MovieTableViewCell {
     @IBOutlet weak var profilePicture: UIImageView! {
         didSet {
-            profilePicture.layer.cornerRadius = 4
+            profilePicture.layer.cornerRadius = .movieCornerRadius
             profilePicture.clipsToBounds = true
             profilePicture.kf.indicatorType = .activity
         }
@@ -17,6 +17,10 @@ class CastPersonCell: MovieTableViewCell {
     
     @IBOutlet weak var character: UILabel!
     @IBOutlet weak var name: UILabel!
+    
+    override func prepareForReuse() {
+        profilePicture.image = nil
+    }
     
     func fill(with person: CastPersonViewModel) {
         self.name.text = person.name

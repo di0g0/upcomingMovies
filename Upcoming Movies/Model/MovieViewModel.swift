@@ -61,6 +61,10 @@ class MovieViewModel {
         return String(format: "%.1f", rating)
     }
     
+    var trailerKey: String? {
+        return movie.trailerKey
+    }
+    
     var yearString: String {
         let dateFormater = DateFormatter()
         dateFormater.dateFormat = "yyyy"

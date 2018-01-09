@@ -7,9 +7,7 @@
 //
 
 import UIKit
-class SearchMovieViewController: MovieListBaseViewController {
-    private static let openMovieDetailSegue = "searchMovieToDetailSegue"
-    
+class SearchMovieViewController: MovieListBaseViewController {        
     var keyboardTimer: Timer?
     
     let searchBar: UISearchBar = {
@@ -46,7 +44,7 @@ class SearchMovieViewController: MovieListBaseViewController {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.movieListViewModel.listType = .Search
-        self.setupSearchBar()        
+        self.setupSearchBar()
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

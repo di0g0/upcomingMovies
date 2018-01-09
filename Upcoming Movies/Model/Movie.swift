@@ -64,7 +64,7 @@ struct Movie {
     let backdropUrl:String?
     let avgRating:Double?
     var runTime:Int?
-    
+    var trailerKey:String?
     let genreIds:[Int]
     
     var cast:[CastPerson] = []
@@ -87,6 +87,13 @@ struct Movie {
         let runtime = jsonObject[Constants.ResponseParams.runtime] as? Int
         self.runTime = runtime
         
+        if let videos = jsonObject[Constants.ResponseParams.videos] as? JSONObject,
+            let videoResults = videos[Constants.ResponseParams.results] as? [JSONObject],
+            let trailer = videoResults.first(where: { $0["type"] as! String == "Trailer"}),
+            let trailerKey = trailer["key"] as? String {
+            self.trailerKey = trailerKey
+        }
+        
         guard let credits = jsonObject[Constants.ResponseParams.credits] as? JSONObject,
             let castList = credits[Constants.ResponseParams.cast] as? [JSONObject] else {
                 return
@@ -97,6 +104,7 @@ struct Movie {
                 self.director = CastPerson(jsonObject: director)
             }
         }
+        
         
         var cast:[CastPerson] = []
         for obj in castList {

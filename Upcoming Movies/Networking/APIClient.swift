@@ -22,7 +22,7 @@ public enum Result<T> {
 }
 
 class APIClient {
-    private static let apiKey = "1f54bd990f1cdfb230adb312546d765d"
+    private static let apiKey = "c4fc48ad9f20ea3972c007ee1528fae2"
     private static let defaultParams:JSONObject = [
         Constants.RequestParams.apiKey : apiKey,
         Constants.RequestParams.language:LocationManager.lang,
